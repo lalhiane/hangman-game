@@ -27,7 +27,7 @@ async function getData (url) {
   hangamn(data);
 }
 
-getData("../data/data.json");
+getData('https://raw.githubusercontent.com/lalhiane/hangman-game/main/data/data.json');
 
 function hangamn (words) {
 
