@@ -18,129 +18,104 @@ lettersList.forEach((letter) => {
 
 });
 
-const words = {
-  programming: [
-    "php",
-    "javascript",
-    "go",
-    "scala",
-    "fortran",
-    "mysql",
-    "r",
-    "python",
-  ],
-  movies: [
-    "prestige",
-    "inception",
-    "parasite",
-    "interstellar",
-    "whiplash",
-    "mysql",
-    "memonto",
-    "coco",
-    "up",
-  ],
-  countries: [
-    "syria",
-    "palestine",
-    "yemen",
-    "egypt",
-    "bahrain",
-    "qatar",
-    "morocco",
-  ],
-  people: [
-    "albert einstein",
-    "hitchcock",
-    "alexander",
-    "cleopatra",
-    "mahatma ghandi",
-  ],
-};
+async function getData (url) {
 
-const keys = Object.keys(words);
+  let response = await fetch(url);
 
-const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  let data = await response.json();
 
-const randomVal = words[randomKey];
+  hangamn(data);
+}
 
-const randomWord = randomVal[Math.floor(Math.random() * randomVal.length)];
+getData("../data/data.json");
 
-document.querySelector(".game-info span").innerHTML = randomKey;
+function hangamn (words) {
 
-const randomWordLetters = [...randomWord];
+  const keys = Object.keys(words);
 
-randomWordLetters.forEach((char) => {
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
 
-  const spanEl = document.createElement("span");
+  const randomVal = words[randomKey];
 
-  if (char === " ") spanEl.className = "space";
+  const randomWord = randomVal[Math.floor(Math.random() * randomVal.length)];
 
-  document.querySelector(".letters-guess").appendChild(spanEl);
+  document.querySelector(".game-info span").innerHTML = randomKey;
 
-});
+  const randomWordLetters = [...randomWord];
 
-let theStatus = false,
-  sucssesAttempts = 0,
-  wrongAttempts = 0;
+  randomWordLetters.forEach((char) => {
 
-const spansGuess = document.querySelectorAll(".letters-guess span");
+    const spanEl = document.createElement("span");
 
-const hangmanDraw = document.querySelector(".hangman-draw");
+    if (char === " ") spanEl.className = "space";
 
-document.addEventListener("click", function (e) {
+    document.querySelector(".letters-guess").appendChild(spanEl);
 
-  if (e.target.classList.contains("letter-box")) {
+  });
 
-    theStatus = false;
+  let theStatus = false,
+    sucssesAttempts = 0,
+    wrongAttempts = 0;
 
-    e.target.classList.add("clicked");
+  const spansGuess = document.querySelectorAll(".letters-guess span");
 
-    randomWordLetters.forEach((letter, index) => {
+  const hangmanDraw = document.querySelector(".hangman-draw");
 
-      if (e.target.innerHTML === letter) {
+  document.addEventListener("click", function (e) {
 
-        theStatus = true;
+    if (e.target.classList.contains("letter-box")) {
 
-        spansGuess[index].innerHTML = letter;
+      theStatus = false;
 
-        sucssesAttempts++;
+      e.target.classList.add("clicked");
 
-      }
+      randomWordLetters.forEach((letter, index) => {
 
-    });
+        if (e.target.innerHTML === letter) {
 
-    if (!theStatus) {
+          theStatus = true;
 
-      wrongAttempts++;
+          spansGuess[index].innerHTML = letter;
 
-      hangmanDraw.classList.add(`wrong-${wrongAttempts}`);
+          sucssesAttempts++;
 
-      document.getElementById("fail-sound-effect").play();
+        }
 
-      if (wrongAttempts === 8) {
-        
-        endGame(`Game Over, The Word Is: \`${randomWord}\``);
+      });
 
-        lettersContainer.classList.add("finished");
+      if (!theStatus) {
 
-      }
+        wrongAttempts++;
 
-    } else {
+        hangmanDraw.classList.add(`wrong-${wrongAttempts}`);
 
-      document.getElementById("success-sound-effect").play();
+        document.getElementById("fail-sound-effect").play();
 
-      if (sucssesAttempts === randomWord.length) {
-    
-        endGame(`Congratulation, You Have ${wrongAttempts} Wrongs!`);
+        if (wrongAttempts === 8) {
+          
+          endGame(`Game Over, The Word Is: \`${randomWord}\``);
+
+          lettersContainer.classList.add("finished");
+
+        }
+
+      } else {
+
+        document.getElementById("success-sound-effect").play();
+
+        if (sucssesAttempts === randomWord.length) {
+      
+          endGame(`Congratulation, You Have ${wrongAttempts} Wrongs!`);
+
+        }
 
       }
 
     }
+    
+  });
 
-  }
-  
-});
+}
 
 function endGame(msg) {
 

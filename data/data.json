@@ -1,0 +1,39 @@
+{
+    "programming": [
+      "php",
+      "javascript",
+      "go",
+      "scala",
+      "fortran",
+      "mysql",
+      "r",
+      "python"
+    ],
+    "movies": [
+      "prestige",
+      "inception",
+      "parasite",
+      "interstellar",
+      "whiplash",
+      "mysql",
+      "memonto",
+      "coco",
+      "up"
+    ],
+    "countries": [
+      "syria",
+      "palestine",
+      "yemen",
+      "egypt",
+      "bahrain",
+      "qatar",
+      "morocco"
+    ],
+    "people": [
+      "albert einstein",
+      "hitchcock",
+      "alexander",
+      "cleopatra",
+      "mahatma ghandi"
+    ]
+}
